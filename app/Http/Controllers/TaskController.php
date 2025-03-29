@@ -3,11 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Gate;
 
-class TaskController extends Controller
+class TaskController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return[
+            new Middleware('auth:sanctum',except: [
+                'index',
+                'show'
+            ]),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -26,8 +37,8 @@ class TaskController extends Controller
             'body' => 'required',
         ]);
 
-        $task = Task::create($fields);
-        return ['task' => $task];
+        $task = $request->user()->post()->create($fields);
+        return ['task' => $task,'message'=>'Task successfully created'];
     }
 
     /**
@@ -43,13 +54,14 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
+        Gate::authorize('modify', $task);
         $fields = $request->validate([
             'title' => 'required|max:255',
             'body' => 'required',
         ]);
 
         $task->update($fields);
-        return ['task' => $task];
+        return ['task' => $task,'message' => 'Task updated'];
     }
 
     /**
@@ -57,6 +69,7 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        Gate::authorize('modify', $task);
         $task->delete();
         return ['message' => 'Task deleted'];
     }
