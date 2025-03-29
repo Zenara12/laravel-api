@@ -6,14 +6,12 @@ Before installing Laravel 11, ensure you have the following installed on your sy
 - **PHP**: >= 8.2
 - **Composer**: Latest version
 - **MySQL** or **PostgreSQL** (or any other supported database)
-- **Node.js**: Latest LTS version
-- **NPM** or **Yarn**
 
 ## Installation
 ### 1. Clone the Repository (if applicable)
 ```sh
-git clone https://github.com/your-repo/your-laravel-project.git
-cd your-laravel-project
+git clone https://github.com/Zenara12/laravel-api.git
+cd your-laravel-project-name
 ```
 
 ### 2. Install Dependencies
@@ -34,7 +32,12 @@ DB_PORT=3306
 DB_DATABASE=your_database
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
+
+APP_URL=http://localhost:8000
+FRONTEND_URL=http://localhost:3000 
+SANCTUM_STATEFUL_DOMAINS=localhost:3000
 ```
+
 
 ### 4. Generate Application Key
 ```sh
@@ -44,11 +47,6 @@ php artisan key:generate
 ### 5. Run Database Migrations
 ```sh
 php artisan migrate
-```
-
-### 6. Install Frontend Dependencies
-```sh
-npm install && npm run dev
 ```
 
 ### 7. Serve the Application
@@ -64,34 +62,5 @@ The application should now be running on `http://127.0.0.1:8000/`.
 php artisan test
 ```
 
-### Clearing Cache
-```sh
-php artisan cache:clear
-php artisan config:clear
-php artisan route:clear
-php artisan view:clear
-```
 
-### Running Queues
-```sh
-php artisan queue:work
-```
-
-## Deployment Steps
-When deploying Laravel 11 to a production server:
-1. Set up a web server (e.g., Nginx or Apache)
-2. Run `composer install --no-dev --optimize-autoloader`
-3. Run `php artisan migrate --force`
-4. Configure queue workers (if applicable)
-5. Use Laravel Vapor, Forge, or Envoyer for seamless deployment (optional)
-
-## Contributing
-If you wish to contribute, create a new branch and submit a pull request.
-
-## License
-This project is licensed under the MIT License.
-
----
-
-Enjoy building with Laravel 11! 🚀
 
