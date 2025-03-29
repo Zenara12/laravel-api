@@ -6,6 +6,7 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller implements HasMiddleware
@@ -13,10 +14,7 @@ class TaskController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return[
-            new Middleware('auth:sanctum',except: [
-                'index',
-                'show'
-            ]),
+            new Middleware('auth:sanctum'),
         ];
     }
     /**
@@ -24,7 +22,7 @@ class TaskController extends Controller implements HasMiddleware
      */
     public function index()
     {
-        return Task::all();
+        return Task::where('user_id',Auth::id())->latest()->get();
     }
 
     /**
@@ -37,7 +35,7 @@ class TaskController extends Controller implements HasMiddleware
             'body' => 'required',
         ]);
 
-        $task = $request->user()->post()->create($fields);
+        $task = $request->user()->tasks()->create($fields);
         return ['task' => $task,'message'=>'Task successfully created'];
     }
 
