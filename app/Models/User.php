@@ -46,7 +46,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function post(){
+    public function tasks(){
         return $this->hasMany(Task::class);
     }
 }
