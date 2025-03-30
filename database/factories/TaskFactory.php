@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->sentence,
+            'body' => $this->faker->paragraph,
+            'status' => $this->faker->boolean, // Random true/false
+            'user_id' => User::inRandomOrder()->first()->id ?? User::factory(), // Ensure valid user_id
         ];
     }
 }
