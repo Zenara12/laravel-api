@@ -21,5 +21,23 @@ class TaskTest extends TestCase
 
         $this->assertEquals('TitleTest:Body Test',$task->task());
         $this->assertNotEmpty('TitleTest:Body Test',$task->task());
+        $this->assertNotEquals('TESTTESTESt',$task->task());
+    }
+
+    /**
+     * Test the task title with body of the Task model
+     */
+
+    public function test_task_status_boolean_or_zero_and_one_only(): void
+    {
+        $task = new Task([
+            'status'=>true,
+        ]);
+
+        $this->assertIsBool(true,$task->status());
+        $this->assertIsBool(false,$task->status());
+        $this->assertIsNotBool(1,$task->status());
+        $this->assertIsNotBool('',$task->status());
+
     }
 }

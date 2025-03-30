@@ -24,4 +24,7 @@ class Task extends Model
     public function task():string{
         return $this->title.':'.$this->body;
     }
+    public function status(){
+        return $this->status;
+    }
 }
