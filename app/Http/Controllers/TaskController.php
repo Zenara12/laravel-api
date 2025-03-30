@@ -56,8 +56,9 @@ class TaskController extends Controller implements HasMiddleware
     {
         Gate::authorize('modify', $task);
         $fields = $request->validate([
-            'title' => 'required|max:255',
-            'body' => 'required',
+            'title' => 'sometimes|required|max:255',
+            'body' => 'sometimes|required',
+            'status' => 'sometimes|required|boolean'
         ]);
 
         $task->update($fields);
